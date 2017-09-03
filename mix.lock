@@ -1,0 +1,6 @@
+%{"dotenv": {:hex, :dotenv, "2.0.0", "87e77a94e54c20eca49989876395e26878b109f016f9fd9c42b65bb9c59bca3f", [], [], "hexpm"},
+  "msgpax": {:hex, :msgpax, "0.8.2", "0e83d86e7cbf1bdcf7b870c25951df042ec19f9804a1a9c2fa59091a43ee2886", [:mix], [], "hexpm"},
+  "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},
+  "spell": {:hex, :spell, "0.1.0", "a5214cfcb67fbe264884d46d699c90e384fb5785fe4765c6357e03a2f808c0dd", [:mix], [{:msgpax, "~> 0.7", [hex: :msgpax, repo: "hexpm", optional: false]}, {:poison, "~> 1.4.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
+  "websocket_client": {:hex, :websocket_client, "1.3.0", "2275d7daaa1cdacebf2068891c9844b15f4fdc3de3ec2602420c2fb486db59b6", [:rebar3], [], "hexpm"},
+  "websockex": {:hex, :websockex, "0.4.0", "72096b1257baffc52c5f15c7366fb468e373b3c6173a6fee45311bfdb8ee1256", [], [], "hexpm"}}
