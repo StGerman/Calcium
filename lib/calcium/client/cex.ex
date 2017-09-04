@@ -1,21 +1,23 @@
 defmodule Calcium.Client.CEX do
+  @moduledoc """
+
+  CEX client
+  """
+  # use GenStage
   use WebSockex
   require Logger
 
-  @url     System.get_env("CEX_URL")
-  @user_id System.get_env("CEX_USER_ID")
-  @key     System.get_env("CEX_KEY")
-  @secret  System.get_env("CEX_SECRET")
-
   def start_link do
-    WebSockex.start_link(@url, __MODULE__, {})
+    cex_url = System.get_env("CEX_URL")
+    WebSockex.start_link(cex_url, __MODULE__, {})
   end
 
   def auth_json do
+    stamp = timestamp()
     %{"e" => "auth", "auth" => %{
-        "key" => @key,
-        "signature" => signature(),
-        "timestamp" => timestamp()
+        "key" => key(),
+        "signature" => signature(stamp),
+        "timestamp" => stamp
       }
     } |> Poison.encode!
   end
@@ -36,10 +38,13 @@ defmodule Calcium.Client.CEX do
     {:ok, state}
   end
 
-  defp signature do
-    :crypto.hmac(:sha256, "key", "The quick brown fox jumps over the lazy dog")
-      |> Base.encode16
+  defp user_id, do: System.get_env("CEX_USER_ID")
+  defp key, do: System.get_env("CEX_KEY")
+  defp secret, do: System.get_env("CEX_SECRET")
+  defp timestamp, do: DateTime.utc_now |> DateTime.to_unix |> Integer.to_string
+  defp signature(stamp) do
+    stamped_key = stamp <> key
+    signed_key = :crypto.hmac(:sha256, secret, stamped_key)
+    Base.encode16(signed_key)
   end
-  defp timestamp, do: DateTime.utc_now |> DateTime.to_unix
-
 end
