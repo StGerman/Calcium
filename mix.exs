@@ -15,15 +15,16 @@ defmodule Calcium.Mixfile do
     [extra_applications: apps(Mix.env)]
   end
 
-  defp apps(:dev), do: [:dotenv | apps]
+  defp apps(:dev), do: [:dotenv | apps()]
   defp apps(_), do: apps
   defp apps, do: [:logger, :websockex]
 
   defp deps do
     [
-      {:dotenv, "~> 2.0.0"},
       {:websockex, "~> 0.4.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:dotenv, "~> 2.0.0", only: [:dev, :test]},
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
     ]
   end
 end

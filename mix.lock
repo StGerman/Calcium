@@ -1,4 +1,6 @@
-%{"dotenv": {:hex, :dotenv, "2.0.0", "87e77a94e54c20eca49989876395e26878b109f016f9fd9c42b65bb9c59bca3f", [], [], "hexpm"},
+%{"bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [], [], "hexpm"},
+  "credo": {:hex, :credo, "0.8.6", "335f723772d35da499b5ebfdaf6b426bfb73590b6fcbc8908d476b75f8cbca3f", [], [{:bunt, "~> 0.2.0", [hex: :bunt, repo: "hexpm", optional: false]}], "hexpm"},
+  "dotenv": {:hex, :dotenv, "2.0.0", "87e77a94e54c20eca49989876395e26878b109f016f9fd9c42b65bb9c59bca3f", [], [], "hexpm"},
   "msgpax": {:hex, :msgpax, "0.8.2", "0e83d86e7cbf1bdcf7b870c25951df042ec19f9804a1a9c2fa59091a43ee2886", [:mix], [], "hexpm"},
   "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},
   "spell": {:hex, :spell, "0.1.0", "a5214cfcb67fbe264884d46d699c90e384fb5785fe4765c6357e03a2f808c0dd", [:mix], [{:msgpax, "~> 0.7", [hex: :msgpax, repo: "hexpm", optional: false]}, {:poison, "~> 1.4.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
