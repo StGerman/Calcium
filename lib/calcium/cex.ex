@@ -1,4 +1,4 @@
-defmodule Calcium.Client.CEX do
+defmodule Calcium.CEX do
   @moduledoc """
 
   CEX client
@@ -7,9 +7,9 @@ defmodule Calcium.Client.CEX do
   use WebSockex
   require Logger
 
-  def start_link do
+  def start_link(client_pid) do
     cex_url = System.get_env("CEX_URL")
-    WebSockex.start_link(cex_url, __MODULE__, {})
+    {:ok, _} = WebSockex.start_link(cex_url, __MODULE__, {:ok, %{"client" => client_pid}})
   end
 
   def auth_json do
@@ -22,6 +22,10 @@ defmodule Calcium.Client.CEX do
     } |> Poison.encode!
   end
 
+  def ping_json do
+    %{"e" => "ping", "timestamp" => timestamp()} |> Poison.encode!
+  end
+
   def auth_request(pid) do
     Logger.info("Sending authorization request:")
     pid |> send_frame({:text, auth_json})
@@ -32,11 +36,20 @@ defmodule Calcium.Client.CEX do
     WebSockex.send_frame(pid, frame)
   end
 
-  def handle_frame({type, json_msg}, state) do
+  def handle_frame({type, json_msg}, {:ok, %{"client" => client_pid}} = state) do
     msg = Poison.decode!(json_msg)
     IO.puts "Received Message - Type: #{inspect type} -- Message: #{inspect msg}"
+    IO.inspect(state)
+    handle_json(self, msg)
     {:ok, state}
   end
+
+  def handle_json(pid, %{"e" => "ping"}) do
+    Logger.info("Ponging")
+    WebSockex.send_frame(pid, ping_json)
+  end
+  def handle_json(pid, %{"e" => "connected"}), do: Logger.info("connected to CEX")
+  def handle_json(pid, msg), do: IO.inspect(msg)
 
   defp user_id, do: System.get_env("CEX_USER_ID")
   defp key, do: System.get_env("CEX_KEY")
