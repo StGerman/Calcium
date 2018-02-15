@@ -12,7 +12,8 @@ defmodule Calcium.Mixfile do
   end
 
   def application do
-    [extra_applications: apps(Mix.env)]
+    [extra_applications: apps(Mix.env),
+      mod: {Calcium, []}]
   end
 
   defp apps(:dev), do: [:dotenv | apps()]
